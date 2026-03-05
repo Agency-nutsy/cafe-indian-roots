@@ -30,10 +30,11 @@ const App = () => {
         <AnimatePresence>
           {loading && <LoadingScreen onComplete={handleLoadingComplete} />}
         </AnimatePresence>
-        <BrowserRouter>
+        {/* ✅ FIXED: basename="/" added */}
+        <BrowserRouter basename="/">
           <Routes>
             <Route element={<Layout />}>
-              <Route path="/" element={<Index />} />
+              <Route index element={<Index />} />
               <Route path="/menu" element={<MenuPage />} />
               <Route path="/about" element={<AboutPage />} />
               <Route path="/gallery" element={<GalleryPage />} />
