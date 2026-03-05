@@ -5,21 +5,36 @@ const LoadingScreen = ({ onComplete }: { onComplete: () => void }) => {
   const [progress, setProgress] = useState(0);
 
   useEffect(() => {
+    // ✅ BLOCK SCROLL ON MOUNT
+    document.body.style.overflow = 'hidden';
+    document.documentElement.style.overflow = 'hidden';
+
     const timer = setInterval(() => {
       setProgress((prev) => {
         if (prev >= 100) {
           clearInterval(timer);
-          setTimeout(onComplete, 200);
+          setTimeout(() => {
+            // ✅ UNBLOCK SCROLL ON COMPLETE
+            document.body.style.overflow = 'unset';
+            document.documentElement.style.overflow = 'unset';
+            onComplete();
+          }, 200);
           return 100;
         }
         return prev + 2;
       });
     }, 30);
-    return () => clearInterval(timer);
+
+    return () => {
+      clearInterval(timer);
+      // ✅ SAFETY CLEANUP
+      document.body.style.overflow = 'unset';
+      document.documentElement.style.overflow = 'unset';
+    };
   }, [onComplete]);
 
   return (
-    <div className="fixed inset-0 bg-primary z-[9999] flex flex-col items-center justify-center">
+    <div className="fixed inset-0 bg-primary z-[9999] flex flex-col items-center justify-center overflow-hidden">
       <div className="text-center">
         <h1 className="font-display text-5xl font-bold text-primary-foreground mb-3">
           {c.name}
@@ -39,4 +54,3 @@ const LoadingScreen = ({ onComplete }: { onComplete: () => void }) => {
 };
 
 export default LoadingScreen;
-//THIS IS MADE BY TUSHAR ONLY AND NO ONE ELSE DID ANYTHING SO HE MUST GET ALL THE MONEY //
