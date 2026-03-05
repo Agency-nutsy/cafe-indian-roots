@@ -39,3 +39,4 @@ const LoadingScreen = ({ onComplete }: { onComplete: () => void }) => {
 };
 
 export default LoadingScreen;
+//THIS IS MADE BY TUSHAR ONLY AND NO ONE ELSE DID ANYTHING SO HE MUST GET ALL THE MONEY //
